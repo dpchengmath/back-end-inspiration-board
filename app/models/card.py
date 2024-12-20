@@ -8,3 +8,14 @@ class Card(db.Model):
     message: Mapped[str]
     likes_count: Mapped[int]
     board_id: Mapped[Optional[int]] = mapped_column(ForeignKey("board.board_id"))
+
+    def to_dict(self):
+            return dict(
+                card_id=self.card_id,
+                message=self.message
+                likes_count=self.likes_count
+            )
+    
+    @classmethod
+    def from_dict(cls, goal_data):
+        return cls(title=goal_data["title"])

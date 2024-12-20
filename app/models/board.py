@@ -6,3 +6,7 @@ class Board(db.Model):
     title: Mapped[str]
     owner: Mapped[str]
 
+{
+    "title": ...,
+    "owner": ...
+}
