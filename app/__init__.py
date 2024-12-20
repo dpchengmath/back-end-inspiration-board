@@ -2,9 +2,9 @@ from flask import Flask
 from flask_cors import CORS
 from .db import db, migrate
 from .models.board import Board
+from .models.card import Card
 import os
 # Import models, blueprints, and anything else needed to set up the app or database
-
 
 def create_app(config=None):
     app = Flask(__name__)
