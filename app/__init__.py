@@ -17,9 +17,9 @@ def create_app(config=None):
 
     # Initialize app with SQLAlchemy db and Migrate
 
-    # Register Blueprints 
+    # Register Blueprints
     db.init_app(app)
-    migrate.init_app(app)
+    migrate.init_app(app,db)
 
     CORS(app)
     return app
