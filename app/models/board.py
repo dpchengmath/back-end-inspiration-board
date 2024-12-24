@@ -6,7 +6,9 @@ class Board(db.Model):
     title: Mapped[str]
     owner: Mapped[str]
 
-{
-    "title": ...,
-    "owner": ...
-}
+    def to_dict(self):
+        return dict (
+            board_id=self.board_id,
+            title=self.title,
+            owner=self.owner
+        )
