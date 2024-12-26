@@ -1,6 +1,7 @@
 from flask import Blueprint, abort, make_response, Response, request
 import requests
 from app.models.board import Board
+from app.models.card import Card
 from .route_utilities import validate_model, create_model
 from ..db import db
 import os
@@ -28,3 +29,20 @@ def create_board():
 
     board_dict, status_code = create_model(Board, board_data)
     return {"board": board_dict}, status_code
+
+@bp.post("/<board_id>/cards")
+def create_associated_card_with_board(board_id):
+    board = validate_model(Board, board_id)
+    request_body = request.get_json()
+    cards_ids = request_body.get("cards_ids", [])
+
+    for card_id in cards_ids:
+        card = validate_model(Card, card_id)
+        card.board_id = board.board_id
+
+    db.session.commit()
+
+    return {
+        "board_id": board.board_id,
+        "cards_ids": cards_ids
+    }, 200
