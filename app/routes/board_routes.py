@@ -46,3 +46,4 @@ def create_associated_card_with_board(board_id):
         "board_id": board.board_id,
         "cards_ids": cards_ids
     }, 200
+
