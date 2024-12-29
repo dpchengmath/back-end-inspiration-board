@@ -18,3 +18,21 @@ def delete_card(card_id):
 
     response = {"message":f"Card {card.card_id} {card.message} deleted successfully"}
     return response, 200
+
+@bp.put("/<card_id>/liked")
+def increase_card_like_count(card_id):
+    card = validate_model(Card, card_id)
+    card.likes_count += 1
+
+    db.session.commit()
+
+    return {"message": f"Card {card.card_id} {card.message} like count updated successfully"}, 200
+
+@bp.put("/<card_id>/disliked")
+def decrease_card_like_count(card_id):
+    card = validate_model(Card, card_id)
+    card.likes_count -= 1
+
+    db.session.commit()
+
+    return {"message": f"Card {card.card_id} {card.message} like count updated successfully"}, 200
