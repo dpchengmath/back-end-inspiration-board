@@ -73,5 +73,19 @@ def test_post_card_ids_to_board(client, one_board, three_cards):
     # Check that Board was updated in the db
     assert len(db.session.get(Board, 1).cards) == 3
 
+def test_get_cards_for_specific_goal_no_cards(client, one_board):
+    # Act
+    response = client.get("/boards/1/cards")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 200
+    assert "cards" in response_body
+    assert len(response_body["cards"]) == 0
+    assert response_body == {
+        
+        "cards": []
+    }
+
 
 

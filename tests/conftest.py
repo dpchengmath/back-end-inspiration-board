@@ -56,10 +56,27 @@ def three_cards(app):
 
 @pytest.fixture
 def liked_card(app):
-    new_card = Card(message="Go on my daily walk 🏞", 
+    new_card = Card(message="Small steps lead to big results", 
                     likes_count="0")
 
     db.session.add(new_card)
     db.session.commit()
+
+@pytest.fixture
+def disliked_card(app):
+    new_card = Card(message="Small steps lead to big results", 
+                    likes_count="1")
+
+    db.session.add(new_card)
+    db.session.commit()
+@pytest.fixture
+def one_card(app):
+    new_card = Card(message="You can do it",
+                      likes_count="1")
+    db.session.add(new_card)
+    db.session.commit()
+
+
+
 
     
