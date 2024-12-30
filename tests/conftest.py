@@ -54,4 +54,12 @@ def three_cards(app):
     db.session.commit()
 
 
+@pytest.fixture
+def liked_card(app):
+    new_card = Card(message="Go on my daily walk 🏞", 
+                    likes_count="0")
+
+    db.session.add(new_card)
+    db.session.commit()
+
     

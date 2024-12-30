@@ -1,23 +1,14 @@
 from app.models.card import Card
+from app import db, create_app
 import pytest
 
 
-# @pytest.mark.skip(reason="No way to test this feature yet")
-def test_post_card_ids_to_board(client, one_board, three_cards):
+def test_mark_liked_on_card(client, liked_card):
     # Act
-    response = client.post("/boards/1/cards", json={
-        "card_ids": [1, 2, 3]
-    })
+    response = client.put("/cards/1/liked")
     response_body = response.get_json()
 
     # Assert
     assert response.status_code == 200
-    assert "id" in response_body
-    assert "card_ids" in response_body
-    assert response_body == {
-        "id": 1,
-        "task_ids": [1, 2, 3]
-    }
-
-    # Check that Goal was updated in the db
-    assert len(Board.query.get(1).tasks) == 3
+    assert response_body == {"message": f"Card 1 Go on my daily walk 🏞 like count updated successfully"}
+    assert db.session.get(Card, 1).likes_count == 1

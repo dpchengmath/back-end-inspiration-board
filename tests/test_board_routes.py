@@ -72,3 +72,6 @@ def test_post_card_ids_to_board(client, one_board, three_cards):
 
     # Check that Board was updated in the db
     assert len(db.session.get(Board, 1).cards) == 3
+
+
+
