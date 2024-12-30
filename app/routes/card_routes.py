@@ -9,6 +9,18 @@ import os
 
 bp = Blueprint("cards_bp", __name__, url_prefix="/cards")
 
+@bp.patch("/<card_id>")
+def update_card(card_id):
+    card = validate_model(Card, card_id)
+    request_body = request.get_json()
+
+    if "message" in request_body:
+        card.message = request_body["message"]
+
+    db.session.commit()
+
+    return {"card": card.to_dict()}, 200
+
 @bp.delete("/<card_id>")
 def delete_card(card_id):
     card = validate_model(Card, card_id)

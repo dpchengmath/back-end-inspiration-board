@@ -16,7 +16,7 @@ def get_boards():
     return {"boards": [board.to_dict()for board in boards]}
 
 @bp.get("/<board_id>")
-def get_board(board_id):
+def get_one_board(board_id):
     board = validate_model(Board, board_id)
     return {"boards": board.to_dict()}
 
@@ -39,9 +39,9 @@ def create_board():
 def create_associated_card_with_board(board_id):
     board = validate_model(Board, board_id)
     request_body = request.get_json()
-    cards_ids = request_body.get("cards_ids", [])
+    card_ids = request_body.get("card_ids", [])
 
-    for card_id in cards_ids:
+    for card_id in card_ids:
         card = validate_model(Card, card_id)
         card.board_id = board.board_id
 
@@ -49,6 +49,6 @@ def create_associated_card_with_board(board_id):
 
     return {
         "board_id": board.board_id,
-        "cards_ids": cards_ids
+        "card_ids": card_ids
     }, 200
 

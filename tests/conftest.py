@@ -41,5 +41,17 @@ def one_board():
     db.session.commit()
     return new_board
 
+@pytest.fixture
+def three_cards(app):
+    db.session.add_all([
+        Card(message="Think of what you have succeeded in", 
+             likes_count="3"),
+        Card(message="Keep going, you're doing great", 
+             likes_count="5"),
+        Card(message="Do not give up, you're almost there", 
+             likes_count="7")
+    ])
+    db.session.commit()
+
 
     
