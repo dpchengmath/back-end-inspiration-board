@@ -15,6 +15,11 @@ def get_boards():
     boards = Board.query.all()
     return {"boards": [board.to_dict()for board in boards]}
 
+@bp.get("/<board_id>")
+def get_board(board_id):
+    board = validate_model(Board, board_id)
+    return {"boards": board.to_dict()}
+
 @bp.get("/<board_id>/cards")
 def get_cards_by_board(board_id):
     board = validate_model(Board,board_id)

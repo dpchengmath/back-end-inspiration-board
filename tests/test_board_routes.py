@@ -28,3 +28,19 @@ def test_get_boards_one_saved_board(client, one_board):
             "owner": "Ada"
         }
     ]}
+
+def test_get_board(client, one_board):
+    # Act
+    response = client.get("/boards/1")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 200
+    assert "boards" in response_body
+    assert response_body == {
+        "boards": {
+            "board_id": 1,
+            "title": "Complete this project on time",
+            "owner": "Ada"
+        }
+    }

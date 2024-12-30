@@ -39,6 +39,7 @@ def one_board():
                         owner = "Ada")
     db.session.add(new_board)
     db.session.commit()
+    return new_board
 
 
     
