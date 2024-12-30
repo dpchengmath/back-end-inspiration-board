@@ -18,6 +18,9 @@ def validate_model(cls, model_id):
     query = db.select(cls).where(column_attr == model_id)
     model = db.session.scalar(query)
 
+    if not model:
+        abort(make_response({ "message": f"{cls.__name__} {model_id} not found"}, 404))
+
     return model
 
 def create_model(cls, model_data):

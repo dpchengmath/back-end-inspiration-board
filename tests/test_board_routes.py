@@ -44,3 +44,13 @@ def test_get_board(client, one_board):
             "owner": "Ada"
         }
     }
+
+
+def test_get_board_not_found(client):
+    # Act
+    response = client.get("/boards/1")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 404
+    assert response_body == {"message": "Board 1 not found"}
