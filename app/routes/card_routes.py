@@ -9,6 +9,7 @@ import os
 
 bp = Blueprint("cards_bp", __name__, url_prefix="/cards")
 
+
 @bp.patch("/<card_id>")
 def update_card(card_id):
     card = validate_model(Card, card_id)
