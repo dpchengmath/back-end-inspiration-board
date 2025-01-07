@@ -51,3 +51,11 @@ def decrease_card_like_count(card_id):
     db.session.commit()
 
     return {"message": f"Card {card.card_id} {card.message} like count updated successfully"}, 200
+
+@bp.delete("")
+def delete_all_cards():
+    cards = Card.query.all()
+    for card in cards:
+        db.session.delete(card)
+    db.session.commit()
+    return {"message": f"All cards have been deleted"}, 200
