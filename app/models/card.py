@@ -21,4 +21,5 @@ class Card(db.Model):
     
     @classmethod
     def from_dict(cls, card_data):
-        return cls(message=card_data["message"])
+        return cls(message=card_data["message"],
+                   board_id=card_data["board_id"])

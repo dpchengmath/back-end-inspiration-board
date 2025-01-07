@@ -34,7 +34,6 @@ def delete_card(card_id):
     return response, 200
 
 
-
 @bp.put("/<card_id>/liked")
 def increase_card_like_count(card_id):
     card = validate_model(Card, card_id)
