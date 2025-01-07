@@ -10,6 +10,7 @@ import os
 bp = Blueprint("cards_bp", __name__, url_prefix="/cards")
 
 
+
 @bp.patch("/<card_id>")
 def update_card(card_id):
     card = validate_model(Card, card_id)
@@ -31,6 +32,8 @@ def delete_card(card_id):
 
     response = {"message":f"Card {card.card_id} {card.message} deleted successfully"}
     return response, 200
+
+
 
 @bp.put("/<card_id>/liked")
 def increase_card_like_count(card_id):

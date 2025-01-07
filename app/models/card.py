@@ -8,7 +8,7 @@ class Card(db.Model):
 
     card_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     message: Mapped[str]
-    likes_count: Mapped[int]
+    likes_count: Mapped[int] = mapped_column(default=0)
     board_id: Mapped[Optional[int]] = mapped_column(ForeignKey("board.board_id"))
     board: Mapped[Optional["Board"]] = relationship(back_populates="cards")
 
@@ -20,5 +20,5 @@ class Card(db.Model):
             )
     
     @classmethod
-    def from_dict(cls, board_data):
-        return cls(title=board_data["title"])
+    def from_dict(cls, card_data):
+        return cls(message=card_data["message"])
