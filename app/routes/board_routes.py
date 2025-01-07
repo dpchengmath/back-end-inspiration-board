@@ -44,6 +44,14 @@ def create_card_associated_with_board(board_id):
         "message": request_body.get("message"),
         "board_id": board.board_id
     }
+    slack_token = os.environ.get("SLACK_BOT_TOKEN")  
+    url = "https://slack.com/api/chat.postMessage"
+    headers = {"Authorization": f"Bearer {slack_token}"}
+    request_body = {
+        "channel": "inspiration_and_brainstorm",  
+        "text": f"A new card on board '{board.title}' was created "
+    }
+    requests.post(url, json=request_body, headers=headers)
     card_dict, status_code = create_model(Card, card_data)
     return {"cards": card_dict}, status_code
 
