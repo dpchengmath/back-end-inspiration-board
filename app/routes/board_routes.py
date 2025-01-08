@@ -55,29 +55,24 @@ def create_card_associated_with_board(board_id):
     card_dict, status_code = create_model(Card, card_data)
     return {"cards": card_dict}, status_code
 
-@bp.delete("")
-def delete_all_boards():
+@bp.delete("/<board_id>")
+def delete_board(board_id):
+    board = validate_model(Board, board_id)
+    db.session.delete(board)
+    db.session.commit()
+    return {"message": f"Board {board.board_id} {board.title} deleted successfully"}, 200
+
+@bp.delete("/cards")
+def delete_all_boards_and_cards():
     boards = Board.query.all()
     for board in boards:
         db.session.delete(board)
     db.session.commit()
-    return {"message": f"All boards have been deleted"}, 200
+    cards = Card.query.all()
+    for card in cards:
+        db.session.delete(card)
+    db.session.commit()
+    return {"message": f"All boards and cards have been deleted"}, 200
 
-# @bp.post("/<board_id>/cards")
-# def create_associated_card_with_board(board_id):
-#     board = validate_model(Board, board_id)
-#     request_body = request.get_json()
-#     card_ids = request_body.get("card_ids", [])
-
-#     for card_id in card_ids:
-#         card = validate_model(Card, card_id)
-#         card.board_id = board.board_id
-
-#     db.session.commit()
-
-#     return {
-#         "board_id": board.board_id,
-#         "card_ids": card_ids
-#     }, 200
 
 
