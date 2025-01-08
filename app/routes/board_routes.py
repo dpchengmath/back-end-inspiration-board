@@ -28,8 +28,8 @@ def get_cards_by_board(board_id):
 @bp.post("")
 def create_board():
     request_body = request.get_json()
-    
-    board_data = {"title": request_body.get("title"), 
+
+    board_data = {"title": request_body.get("title"),
                  "owner": request_body.get("owner")}
 
     board_dict, status_code = create_model(Board, board_data)
@@ -44,11 +44,11 @@ def create_card_associated_with_board(board_id):
         "message": request_body.get("message"),
         "board_id": board.board_id
     }
-    slack_token = os.environ.get("SLACK_BOT_TOKEN")  
+    slack_token = os.environ.get("SLACK_BOT_TOKEN")
     url = "https://slack.com/api/chat.postMessage"
     headers = {"Authorization": f"Bearer {slack_token}"}
     request_body = {
-        "channel": "inspiration_and_brainstorm",  
+        "channel": "inspiration_and_brainstorm",
         "text": f"A new card on board '{board.title}' was created "
     }
     requests.post(url, json=request_body, headers=headers)
@@ -62,7 +62,7 @@ def delete_board(board_id):
     db.session.commit()
     return {"message": f"Board {board.board_id} {board.title} deleted successfully"}, 200
 
-@bp.delete("/cards")
+@bp.delete("")
 def delete_all_boards_and_cards():
     boards = Board.query.all()
     for board in boards:
@@ -73,6 +73,3 @@ def delete_all_boards_and_cards():
         db.session.delete(card)
     db.session.commit()
     return {"message": f"All boards and cards have been deleted"}, 200
-
-
-
