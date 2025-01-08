@@ -62,7 +62,7 @@ def delete_board(board_id):
     db.session.commit()
     return {"message": f"Board {board.board_id} {board.title} deleted successfully"}, 200
 
-@bp.delete("/cards")
+@bp.delete("")
 def delete_all_boards_and_cards():
     boards = Board.query.all()
     for board in boards:
