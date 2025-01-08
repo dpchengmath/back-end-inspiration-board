@@ -41,7 +41,7 @@ def increase_card_like_count(card_id):
 
     db.session.commit()
 
-    return {"message": f"Card {card.card_id} {card.message} like count updated successfully"}, 200
+    return {"card": card.to_dict()}, 200
 
 @bp.put("/<card_id>/disliked")
 def decrease_card_like_count(card_id):
